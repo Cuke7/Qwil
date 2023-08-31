@@ -4,16 +4,22 @@
   "description": "",
   "main": "src/app.js",
   "type": "module",
+  "bin": {
+    "qwil": "bin/app.js"
+  },
   "scripts": {
-    "dev": "nodemon ./src/app.js -e js,md"
+    "dev": "nodemon ./bin/app.js -e js,md"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
     "front-matter": "^4.0.2",
     "marked": "^7.0.5",
     "marked-katex-extension": "^3.0.3",
+    "nanospinner": "^1.1.0",
     "puppeteer": "^21.1.1"
   },
   "devDependencies": {

@@ -20,6 +20,7 @@ Some bullet points:
 
 - **I'm bold**
 - _I'm Italian!_
+- I'm normal
 
 ---
 
