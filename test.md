@@ -9,7 +9,7 @@ A new line in the paragraph.
 
 Another paragraph.
 
-## A subsection
+## Subsection 1
 
 Some bullet points:
 
