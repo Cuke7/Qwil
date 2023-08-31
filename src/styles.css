@@ -1,0 +1,28 @@
+* {
+  font-family: "Computer Modern Serif", serif;
+}
+
+p:has(img) {
+  text-align: center;
+}
+
+img {
+  max-width: -webkit-fill-available;
+  width: 75%;
+}
+
+body {
+  width: 21cm;
+  height: 29.7cm;
+  padding: 50px 100px;
+}
+
+pre{
+  background: black;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: monospace;
+  width: max-content;
+}
+
