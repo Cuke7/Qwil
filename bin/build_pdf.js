@@ -1,6 +1,10 @@
 import puppeteer from "puppeteer";
+import { writeFileSync } from "fs";
 
-export default async function build_pdf(html) {
+export default async function build_pdf(html, destination) {
+  // Write the HTML file for pupetteer
+  writeFileSync(".qwil.html", html);
+
   // PDF generation
   const browser = await puppeteer.launch({
     headless: "new",
@@ -27,13 +31,13 @@ export default async function build_pdf(html) {
   // }, html);
 
   // await page.setContent(html, { waitUntil: "networkidle0" });
-  await page.goto(`file://${process.cwd()}/test/output.html`);
-  await page.addStyleTag({ path: "./test/styles.css" });
+  await page.goto(`file://${process.cwd()}/.qwil.html`);
+  // await page.addStyleTag({ path: "./test/styles.css" });
   await page.waitForFunction("document.fonts.ready");
   await page.emulateMediaType("print");
 
   await page.pdf({
-    path: "./test/result.pdf",
+    path: destination,
     printBackground: true,
     format: "A4",
   });

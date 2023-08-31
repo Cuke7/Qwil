@@ -67,7 +67,32 @@ export default async function (filepath) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <link href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css" rel="stylesheet">
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
-      </head>
+          <style>
+          * {
+          font-family: "Computer Modern Serif", serif;
+            }
+            p:has(img) {
+              text-align: center;
+            }
+            img {
+              max-width: -webkit-fill-available;
+              width: 75%;
+            }
+            body {
+              width: 21cm;
+              height: 29.7cm;
+              padding: 50px 100px;
+            }
+            pre{
+              background: black;
+              color: white;
+              padding: 15px;
+              border-radius: 5px;
+              font-family: monospace;
+              width: max-content;
+            }
+          </style>
+          </head>
       <body>
           ${meta_data.author ? author_header : ""}
           ${meta_data.date ? date_header : ""}
