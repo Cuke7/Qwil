@@ -2,15 +2,16 @@
   "name": "qwil",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./app.js -e js,md"
+    "dev": "nodemon ./src/app.js -e js,md"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "front-matter": "^4.0.2",
     "marked": "^7.0.5",
     "marked-katex-extension": "^3.0.3",
     "puppeteer": "^21.1.1"
