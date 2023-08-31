@@ -5,13 +5,14 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./app.js -e js,md"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "marked": "^7.0.5",
+    "marked-katex-extension": "^3.0.3",
     "puppeteer": "^21.1.1"
   },
   "devDependencies": {

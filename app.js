@@ -1,15 +1,42 @@
 import { marked } from "marked";
 import fs from "fs";
 import puppeteer from "puppeteer";
+import markedKatex from "marked-katex-extension";
 
 marked.use({
   gfm: true,
   breaks: true,
 });
 
-const md = fs.readFileSync("./test.md", { encoding: "utf8", flag: "r" });
+marked.use(
+  markedKatex({
+    throwOnError: true,
+  })
+);
 
-const body = marked.parse(md);
+let md = fs.readFileSync("./test.md", { encoding: "utf8", flag: "r" });
+
+const custom_commands = [
+  {
+    name: "image",
+    regex: /!\[(.*)\]\((.*)\){(.*)}/gm,
+    replaceFunction: (md, regex) => {
+      return md.replace(regex, (match, caption, url, style) => {
+        return `<div style="display: flex; flex-direction: column; align-items: center;"><img src="${url}" style="${style}" /><span style="margin: 20px; 0px">${caption}</span></div>`;
+      });
+    },
+  },
+];
+
+function apply_commands(md) {
+  let out = md;
+  for (const command of custom_commands) {
+    out = command.replaceFunction(md, command.regex);
+  }
+  return out;
+}
+
+const body = marked.parse(apply_commands(md).trim());
 
 const html = `
 <!DOCTYPE html>
@@ -18,6 +45,7 @@ const html = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
 </head>
 <body>
     ${body}
@@ -28,7 +56,7 @@ const html = `
 fs.writeFileSync("output.html", html);
 
 const browser = await puppeteer.launch({
-  headless: false,
+  headless: "new",
 });
 
 const page = await browser.newPage();
@@ -51,18 +79,22 @@ const page = await browser.newPage();
 //   document.body.innerHTML = html;
 // }, html);
 
-await page.setContent(html, { waitUntil: "domcontentloaded" });
+// await page.setContent(html, { waitUntil: "networkidle0" });
+await page.goto(`file://${process.cwd()}/output.html`);
 await page.addStyleTag({ path: "./styles.css" });
+await page.waitForFunction("document.fonts.ready");
+await page.emulateMediaType("print");
 
 await page.pdf({
   path: "result.pdf",
-  margin: { top: "50px", right: "100px", bottom: "50px", left: "100px" },
+  // margin: { top: "50px", right: "100px", bottom: "50px", left: "100px" },
   printBackground: true,
   format: "A4",
 });
 
 // await browser.close();
 
+// time is in ms
 function delay(time) {
   return new Promise(function (resolve) {
     setTimeout(resolve, time);
